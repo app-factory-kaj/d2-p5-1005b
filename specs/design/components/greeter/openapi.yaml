@@ -1,0 +1,73 @@
+openapi: 3.0.3
+info:
+  title: Greeter API
+  version: 0.1.0
+  description: Minimal reference service returning a JSON greeting.
+servers:
+  - url: /
+paths:
+  /hello:
+    get:
+      operationId: getGreeting
+      summary: Get a JSON greeting for an optional name
+      parameters:
+        - name: name
+          in: query
+          required: false
+          description: Name to greet; a generic greeting is returned when omitted
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The greeting
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Greeting'
+  /health:
+    get:
+      operationId: getHealth
+      summary: Service health check
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+components:
+  schemas:
+    Greeting:
+      type: object
+      required: [message]
+      properties:
+        name:
+          type: string
+          nullable: true
+          description: The name that was greeted, when provided
+        message:
+          type: string
+          description: The generated greeting text
+    Health:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          description: Health status label
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: integer
+          description: HTTP or application error code
+        message:
+          type: string
+          description: short human-readable label
+        description:
+          type: string
+          description: detailed explanation
+        moreInfo:
+          type: string
+          description: URI to documentation

@@ -1,0 +1,5 @@
+title Greeter
+
+component greeter as "Greeter Service" service
+
+west -> greeter
